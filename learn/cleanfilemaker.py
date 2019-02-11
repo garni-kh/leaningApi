@@ -1,8 +1,8 @@
 import mysql.connector
-import redis
 from bs4 import BeautifulSoup
+from learn import LEARN_TEXT
+from cleanfilemaker import red
 
-red = redis.Redis(host='localhost', port=6379, db=0)
 
 def conection():
 

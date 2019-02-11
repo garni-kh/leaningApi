@@ -1,21 +1,37 @@
 #!/usr/bin/python
 # -*- coding: <utf-8> -*-
 import os, sys
+from learn import app
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, request,jsonify
+
 from datetime import timedelta
 from datetime import datetime
 from flask import abort, redirect, url_for
 from datetime import date
 import datetime
+import redis
+from learn.learning import testa 
 
-from learning import testa
 
+red = redis.Redis(host='localhost', port=6379, db=0)
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+LEARN_MODEL = os.path.join(APP_ROOT, 'static/model')
+LEARN_TEXT = os.path.join(APP_ROOT, 'static/cleantext')
+
+print("test")
+@app.route('/')
+def api_root():
+    return 'Welcome'
+
+@app.route("/test/<text>",  methods=['post', 'GET'])
+def test(text=None):
+  text = "hey jode "
+  return "<h1>%s<h1>"%text
 
 
 
 @app.route("/_autocomplate/<text>", methods=['post', 'GET'])
-@login_required
 def _autocomplate(text=None):
     a = text
     print(a)
@@ -42,7 +58,6 @@ def _autocomplate(text=None):
 
 
 @app.route("/_autocomplateDIP/<text>", methods=['post', 'GET'])
-@login_required
 def _autocomplateDIP(text): 
   # text must be an 40 len of world or  space decorate in js site  
         print("-------last -40--in root- >>> 40 ---")
@@ -52,9 +67,9 @@ def _autocomplateDIP(text):
           a2 = " "*(40-len(a1))+a1
           print("this is the len of cochak %s"%len(a2))
           print("and this is after decoreitthin conent::: %s"%(a2))
-          b=yad.testa(a2)
+          b = testa(a2)
           return jsonify(resultDIP=b)
         else :
 
-         b=yad.testa(a1)
+         b = testa(a1)
          return jsonify(resultDIP=b)

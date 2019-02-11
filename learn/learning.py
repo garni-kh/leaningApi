@@ -14,18 +14,19 @@ from keras.layers import Dense, Activation
 from keras.models import Sequential, load_model
 import tensorflow as tf
 import numpy as np
-
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+LEARN_MODEL = os.path.join(APP_ROOT, 'static/model')
+LEARN_TEXT = os.path.join(APP_ROOT, 'static/cleantext')
 
 
 sns.set(style='whitegrid', palette='muted', font_scale=1.5)
 
 rcParams['figure.figsize'] = 12, 5
 
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-LEARN_FOLDER = os.path.join(APP_ROOT, 'static/learn')
 
 
-path = LEARN_FOLDER + "/" + "comments9.txt"
+
+path = LEARN_TEXT + "/" + "comments9.txt"
 text1 = open(path).read().lower()
 
 
@@ -66,12 +67,12 @@ model.add(Activation('softmax'))
 #history = model.fit(X, y, validation_split=0.05,
 #                  batch_size=128, epochs=10, shuffle=True).history
 #model save
-#model.save(LEARN_FOLDER + "/" + 'keras_model4.h5')
-#pickle.dump(history, open(LEARN_FOLDER + "/" + "history4.p", "wb"))
+#model.save(LEARN_MODEL + "/" + 'keras_model4.h5')
+#pickle.dump(history, open(LEARN_MODEL + "/" + "history4.p", "wb"))
 
 
-model = load_model(LEARN_FOLDER + "/" + "keras_model4.h5")
-history = pickle.load(open(LEARN_FOLDER + "/" + "history4.p", "rb"))
+model = load_model(LEARN_MODEL + "/" + "keras_model4.h5")
+history = pickle.load(open(LEARN_MODEL + "/" + "history4.p", "rb"))
 
 
 def prepare_input(text):
