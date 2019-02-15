@@ -12,8 +12,9 @@ from keras.layers import TimeDistributed
 from keras.layers import LSTM, Dropout
 from keras.layers import Dense, Activation
 from keras.models import Sequential, load_model
-import tensorflow as tf
 import numpy as np
+np.random.seed(42)
+
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 LEARN_MODEL = os.path.join(APP_ROOT, 'static/model')
 LEARN_TEXT = os.path.join(APP_ROOT, 'static/cleantext')
@@ -61,18 +62,18 @@ model.add(Dense(len(chars)))
 model.add(Activation('softmax'))
 
 #start learning very imported comment and un comment
-#optimizer = RMSprop(lr=0.01)
-#model.compile(loss='categorical_crossentropy',
-#              optimizer=optimizer, metrics=['accuracy'])
-#history = model.fit(X, y, validation_split=0.05,
-#                  batch_size=128, epochs=10, shuffle=True).history
+optimizer = RMSprop(lr=0.01)
+model.compile(loss='categorical_crossentropy',
+             optimizer=optimizer, metrics=['accuracy'])
+history = model.fit(X, y, validation_split=0.05,
+                  batch_size=128, epochs=40, shuffle=True).history
 #model save
-#model.save(LEARN_MODEL + "/" + 'keras_model4.h5')
-#pickle.dump(history, open(LEARN_MODEL + "/" + "history4.p", "wb"))
+model.save(LEARN_MODEL + "/" + 'keras_model_theano_4.h5')
+pickle.dump(history, open(LEARN_MODEL + "/" + "history4_theano_5.p", "wb"))
 
 
-model = load_model(LEARN_MODEL + "/" + "keras_model4.h5")
-history = pickle.load(open(LEARN_MODEL + "/" + "history4.p", "rb"))
+model = load_model(LEARN_MODEL + "/" + "keras_model_theano_4.h5")
+history = pickle.load(open(LEARN_MODEL + "/" + "history4_theano_5.p", "rb"))
 
 
 def prepare_input(text):
